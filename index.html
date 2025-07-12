@@ -36,7 +36,7 @@
     }
 
     .percent {
-      font-size: 1em;
+      font-size: 0.5em;
       margin-left: 10px;
     }
 
@@ -64,45 +64,50 @@
 </head>
 <body>
   <div class="title">Ваша скидка!</div>
-  <div class="number" id="output">0<span class="percent">%</span></div>
+  <div class="number" id="output"><span>0</span><span class="percent">%</span></div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      try {
-        // Cookie set/get
-        function setCookie(name, value, hours) {
-          const date = new Date();
-          date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
-          const expires = "expires=" + date.toUTCString();
-          document.cookie = name + "=" + value + "; " + expires + "; path=/; SameSite=Lax";
+      // Функции работы с куками
+      function setCookie(name, value, hours) {
+        const date = new Date();
+        date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
+        const expires = "expires=" + date.toUTCString();
+        document.cookie = `${name}=${value}; ${expires}; path=/; SameSite=Lax`;
+      }
+
+      function getCookie(name) {
+        const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+        return match ? match[2] : null;
+      }
+
+      // Получаем или создаем число
+      let number = getCookie("myNumber");
+      if (!number) {
+        number = Math.floor(Math.random() * 6) + 5;
+        setCookie("myNumber", number, 4); // сохраняем на 4 часа
+      }
+
+      const output = document.getElementById('output');
+
+      // Анимация перебора
+      let animationTime = 1500;
+      let interval = 70;
+      let start = Date.now();
+
+      const animate = setInterval(() => {
+        let now = Date.now();
+        if (now - start >= animationTime) {
+          clearInterval(animate);
+          output.innerHTML = `<span>${number}</span><span class="percent">%</span>`;
+        } else {
+          const rand = Math.floor(Math.random() * 6) + 5;
+          output.innerHTML = `<span>${rand}</span><span class="percent">%</span>`;
         }
+      }, interval);
 
-        function getCookie(name) {
-          const value = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
-          return value ? value.pop() : null;
-        }
-
-        let number = getCookie("myNumber");
-
-        if (!number) {
-          number = Math.floor(Math.random() * 6) + 5;
-          setCookie("myNumber", number, 4);
-        }
-
-        const output = document.getElementById('output');
-        const percent = document.querySelector('.percent');
-
-        // === Анимация перебора чисел ===
-        let tempNumber = 0;
-        let counter = 0;
-        const animationDuration = 1500; // 1.5 сек
-        const interval = 70; // скорость перебора
-        const startTime = Date.now();
-
-        const intervalId = setInterval(() => {
-          const now = Date.now();
-          if (now - startTime >= animationDuration) {
-            clearInterval(intervalId);
-            output.innerHTML = `<span>${number}</span><span class="percent">%</span>`;
-          } else {
-            const rand = Math.floor(Math.random() * 6) + 5*
+      // Конфетти
+      const colors = ["#ff6a00", "#ffd700", "#ff1493", "#00bfff", "#7cfc00"];
+      for (let i = 0; i < 60; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.ad
