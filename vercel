@@ -1,0 +1,4 @@
+/папка-проекта/
+├── public/
+│   └── index.html
+└── vercel.json
