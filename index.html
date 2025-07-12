@@ -7,22 +7,24 @@
     body {
       margin: 0;
       background: #fffbe6;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       height: 100vh;
       overflow: hidden;
       font-family: sans-serif;
+      position: relative;
     }
 
     .number {
       font-size: 120px;
       font-weight: bold;
       color: #ff6a00;
-      position: relative;
-      z-index: 1;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
       display: flex;
       align-items: center;
+      justify-content: center;
     }
 
     .percent {
@@ -37,7 +39,7 @@
       background: red;
       animation: shootUp linear forwards;
       opacity: 0.8;
-      z-index: 0;
+      z-index: 1;
     }
 
     @keyframes shootUp {
@@ -56,5 +58,41 @@
   <div class="number" id="output"></div>
 
   <script>
-    // === 1. Хранение на 4 часа ===
-    const match = doc
+    // === 1. Генерация числа и сохранение на 4 часа ===
+    const match = document.cookie.match(/(?:^|;\s*)myNumber=(\d+)/);
+    let number;
+
+    if (match) {
+      number = match[1];
+    } else {
+      number = Math.floor(Math.random() * 6) + 5;
+      document.cookie = "myNumber=" + number + "; max-age=14400"; // 4 часа
+    }
+
+    // === 2. Показ числа ===
+    const output = document.getElementById('output');
+    output.innerHTML = `<span>${number}</span><span class="percent">%</span>`;
+
+    // === 3. Конфетти снизу вверх ===
+    function getRandomColor() {
+      const colors = ["#ff6a00", "#ffd700", "#ff1493", "#00bfff", "#7cfc00"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function createConfetti() {
+      for (let i = 0; i < 60; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.backgroundColor = getRandomColor();
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.bottom = "0px";
+        confetti.style.animationDuration = (1.5 + Math.random() * 1.5) + "s";
+        confetti.style.animationDelay = (Math.random() * 1.5) + "s";
+        document.body.appendChild(confetti);
+      }
+    }
+
+    createConfetti();
+  </script>
+</body>
+</html>
