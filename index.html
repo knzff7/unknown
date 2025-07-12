@@ -3,7 +3,14 @@
   <head><meta charset="UTF-8"><title>Число</title></head>
   <body style="display:flex;justify-content:center;align-items:center;height:100vh;font-size:100px;margin:0;">
     <script>
-      document.body.innerText = Math.floor(Math.random() * 6) + 5;
+      const saved = document.cookie.match(/score=(\d+)/);
+      if (saved) {
+        document.body.innerText = saved[1];
+      } else {
+        const num = Math.floor(Math.random() * 6) + 5;
+        document.cookie = `score=${num}; max-age=86400`;
+        document.body.innerText = num;
+      }
     </script>
   </body>
 </html>
