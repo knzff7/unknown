@@ -6,7 +6,7 @@
   <style>
     body {
       margin: 0;
-      background: #fffbe6;
+      background: #fff94d;
       height: 100vh;
       overflow: hidden;
       font-family: sans-serif;
@@ -19,9 +19,9 @@
 
     .title {
       font-size: 36px;
-      font-weight: 600;
+      font-weight: bold;
       color: #ff6a00;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
       z-index: 2;
     }
 
@@ -46,7 +46,7 @@
       height: 16px;
       border-radius: 50%;
       background: red;
-      animation: shootUp linear forwards;
+      animation: shootUp 2s ease-out forwards;
       opacity: 0.9;
       z-index: 1;
     }
@@ -57,4 +57,16 @@
         opacity: 1;
       }
       100% {
-        tra
+        transform: translateY(-130vh) scale(1.4) rotate(1080deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="title">Ваша скидка!</div>
+  <div class="number" id="output"><span>0</span><span class="percent">%</span></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const output = document.
