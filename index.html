@@ -69,6 +69,31 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       try {
-        // Получение числа из куки
-        const match = document.cookie.match(/(?:^|;\s*)myNumber=(\d+)/);
-        let number;
+        // Получение и установка cookie с безопасными атрибутами
+        function setCookie(name, value, hours) {
+          const date = new Date();
+          date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
+          const expires = "expires=" + date.toUTCString();
+          document.cookie = name + "=" + value + "; " + expires + "; path=/; SameSite=Lax";
+        }
+
+        function getCookie(name) {
+          const value = document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)");
+          return value ? value.pop() : null;
+        }
+
+        // === 1. Генерация или получение сохраненного числа
+        let number = getCookie("myNumber");
+
+        if (!number) {
+          number = Math.floor(Math.random() * 6) + 5;
+          setCookie("myNumber", number, 4); // хранится 4 часа
+        }
+
+        // === 2. Отображение числа
+        const output = document.getElementById('output');
+        output.innerHTML = `<span>${number}</span><span class="percent">%</span>`;
+
+        // === 3. Конфетти
+        const colors = ["#ff6a00", "#ffd700", "#ff1493", "#00bfff", "#7cfc00"];
+        for (let i = 0; i < 60; i+
