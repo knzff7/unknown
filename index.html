@@ -64,12 +64,12 @@
 </head>
 <body>
   <div class="title">Ваша скидка!</div>
-  <div class="number" id="output">Загрузка...</div>
+  <div class="number" id="output">0<span class="percent">%</span></div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       try {
-        // cookie set/get
+        // Cookie set/get
         function setCookie(name, value, hours) {
           const date = new Date();
           date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
@@ -90,24 +90,19 @@
         }
 
         const output = document.getElementById('output');
-        output.innerHTML = `<span>${number}</span><span class="percent">%</span>`;
+        const percent = document.querySelector('.percent');
 
-        const colors = ["#ff6a00", "#ffd700", "#ff1493", "#00bfff", "#7cfc00"];
-        for (let i = 0; i < 60; i++) {
-          const confetti = document.createElement("div");
-          confetti.classList.add("confetti");
-          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-          confetti.style.left = Math.random() * 100 + "vw";
-          confetti.style.bottom = "0px";
-          confetti.style.animationDuration = (1.5 + Math.random() * 1.5) + "s";
-          confetti.style.animationDelay = (Math.random() * 1.5) + "s";
-          document.body.appendChild(confetti);
-        }
-      } catch (e) {
-        document.getElementById('output').innerText = 'Ошибка 😢';
-        console.error("Ошибка:", e);
-      }
-    });
-  </script>
-</body>
-</html>
+        // === Анимация перебора чисел ===
+        let tempNumber = 0;
+        let counter = 0;
+        const animationDuration = 1500; // 1.5 сек
+        const interval = 70; // скорость перебора
+        const startTime = Date.now();
+
+        const intervalId = setInterval(() => {
+          const now = Date.now();
+          if (now - startTime >= animationDuration) {
+            clearInterval(intervalId);
+            output.innerHTML = `<span>${number}</span><span class="percent">%</span>`;
+          } else {
+            const rand = Math.floor(Math.random() * 6) + 5*
