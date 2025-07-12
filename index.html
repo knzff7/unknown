@@ -26,7 +26,7 @@
     }
 
     .percent {
-      font-size: 1em; /* теперь % будет того же размера, что и цифра */
+      font-size: 1em;
       margin-left: 10px;
     }
 
@@ -35,18 +35,18 @@
       width: 10px;
       height: 10px;
       background: red;
-      animation: fall linear forwards;
+      animation: shootUp linear forwards;
       opacity: 0.8;
       z-index: 0;
     }
 
-    @keyframes fall {
+    @keyframes shootUp {
       0% {
-        transform: translateY(-10px) rotate(0deg);
+        transform: translateY(0) scale(1) rotate(0deg);
         opacity: 1;
       }
       100% {
-        transform: translateY(110vh) rotate(720deg);
+        transform: translateY(-120vh) scale(1.2) rotate(720deg);
         opacity: 0;
       }
     }
@@ -56,41 +56,5 @@
   <div class="number" id="output"></div>
 
   <script>
-    // Получаем число из куки или создаем новое
-    const match = document.cookie.match(/(?:^|;\s*)myNumber=(\d+)/);
-    let number;
-
-    if (match) {
-      number = match[1];
-    } else {
-      number = Math.floor(Math.random() * 6) + 5;
-      document.cookie = "myNumber=" + number + "; max-age=31536000"; // 1 год
-    }
-
-    // Создаем структуру с числом и символом %
-    const output = document.getElementById('output');
-    output.innerHTML = `<span>${number}</span><span class="percent">%</span>`;
-
-    // Генерация конфетти
-    function getRandomColor() {
-      const colors = ["#ff6a00", "#ffd700", "#ff1493", "#00bfff", "#7cfc00"];
-      return colors[Math.floor(Math.random() * colors.length)];
-    }
-
-    function createConfetti() {
-      for (let i = 0; i < 80; i++) {
-        const confetti = document.createElement("div");
-        confetti.classList.add("confetti");
-        confetti.style.backgroundColor = getRandomColor();
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.top = "-10px";
-        confetti.style.animationDuration = (2 + Math.random() * 3) + "s";
-        confetti.style.animationDelay = (Math.random() * 2) + "s";
-        document.body.appendChild(confetti);
-      }
-    }
-
-    createConfetti();
-  </script>
-</body>
-</html>
+    // === 1. Хранение на 4 часа ===
+    const match = doc
