@@ -69,7 +69,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       try {
-        // Получение и установка cookie с безопасными атрибутами
+        // cookie set/get
         function setCookie(name, value, hours) {
           const date = new Date();
           date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
@@ -82,18 +82,32 @@
           return value ? value.pop() : null;
         }
 
-        // === 1. Генерация или получение сохраненного числа
         let number = getCookie("myNumber");
 
         if (!number) {
           number = Math.floor(Math.random() * 6) + 5;
-          setCookie("myNumber", number, 4); // хранится 4 часа
+          setCookie("myNumber", number, 4);
         }
 
-        // === 2. Отображение числа
         const output = document.getElementById('output');
         output.innerHTML = `<span>${number}</span><span class="percent">%</span>`;
 
-        // === 3. Конфетти
         const colors = ["#ff6a00", "#ffd700", "#ff1493", "#00bfff", "#7cfc00"];
-        for (let i = 0; i < 60; i+
+        for (let i = 0; i < 60; i++) {
+          const confetti = document.createElement("div");
+          confetti.classList.add("confetti");
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.left = Math.random() * 100 + "vw";
+          confetti.style.bottom = "0px";
+          confetti.style.animationDuration = (1.5 + Math.random() * 1.5) + "s";
+          confetti.style.animationDelay = (Math.random() * 1.5) + "s";
+          document.body.appendChild(confetti);
+        }
+      } catch (e) {
+        document.getElementById('output').innerText = 'Ошибка 😢';
+        console.error("Ошибка:", e);
+      }
+    });
+  </script>
+</body>
+</html>
