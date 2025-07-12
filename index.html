@@ -6,7 +6,7 @@
   <style>
     body {
       margin: 0;
-      background: #fffbe6; /* Мягкий желтый фон */
+      background: #fffbe6;
       height: 100vh;
       overflow: hidden;
       font-family: sans-serif;
@@ -36,36 +36,3 @@
     }
 
     .percent {
-      font-size: 0.5em;
-      margin-left: 10px;
-    }
-
-    .confetti {
-      position: absolute;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: red;
-      animation: shootUp 2s ease-out forwards;
-      opacity: 0.9;
-      z-index: 1;
-    }
-
-    @keyframes shootUp {
-      0% {
-        transform: translateY(0) scale(1) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-130vh) scale(1.4) rotate(1080deg);
-        opacity: 0;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="title">Ваша скидка!</div>
-  <div class="number" id="output"><span>—</span><span class="percent">%</span></div>
-
-  <script>
-    document.addEven
