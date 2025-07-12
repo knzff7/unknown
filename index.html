@@ -51,3 +51,24 @@
     }
 
     @keyframes shootUp {
+      0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120vh) scale(1.2) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="title">Ваша скидка!</div>
+  <div class="number" id="output">Загрузка...</div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        // Получение числа из куки
+        const match = document.cookie.match(/(?:^|;\s*)myNumber=(\d+)/);
+        let number;
