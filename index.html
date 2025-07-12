@@ -20,6 +20,7 @@
       font-weight: bold;
       color: #ff6a00;
       position: relative;
+      z-index: 1;
     }
 
     .percent {
@@ -33,14 +34,47 @@
       width: 10px;
       height: 10px;
       background: red;
-      animation: fall 3s linear infinite;
+      animation: fall linear forwards;
       opacity: 0.8;
+      z-index: 0;
     }
 
     @keyframes fall {
       0% {
-        transform: translateY(-100px) rotate(0deg);
+        transform: translateY(-10px) rotate(0deg);
         opacity: 1;
       }
       100% {
-        transform: translateY(100vh) rotate(720deg);
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="number" id="output">0<span class="percent">%</span></div>
+
+  <script>
+    // Получаем число из куки или создаем новое
+    const match = document.cookie.match(/(?:^|;\s*)myNumber=(\d+)/);
+    let number;
+
+    if (match) {
+      number = match[1];
+    } else {
+      number = Math.floor(Math.random() * 6) + 5;
+      document.cookie = "myNumber=" + number + "; max-age=31536000"; // 1 год
+    }
+
+    // Вывод числа + %
+    document.getElementById('output').innerHTML = number + '<span class="percent">%</span>';
+
+    // Генерация конфетти
+    function getRandomColor() {
+      const colors = ["#ff6a00", "#ffd700", "#ff1493", "#00bfff", "#7cfc00"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    function createConfetti() {
+      for (let i = 0; i < 80; i++) {
+        const confetti = document.create
