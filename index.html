@@ -1,16 +1,46 @@
 <!DOCTYPE html>
-<html>
-  <head><meta charset="UTF-8"><title>Число</title></head>
-  <body style="display:flex;justify-content:center;align-items:center;height:100vh;font-size:100px;margin:0;">
-    <script>
-      const saved = document.cookie.match(/score=(\d+)/);
-      if (saved) {
-        document.body.innerText = saved[1];
-      } else {
-        const num = Math.floor(Math.random() * 6) + 5;
-        document.cookie = `score=${num}; max-age=86400`;
-        document.body.innerText = num;
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Ваш результат</title>
+  <style>
+    body {
+      margin: 0;
+      background: #fffbe6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    .number {
+      font-size: 120px;
+      font-weight: bold;
+      color: #ff6a00;
+      position: relative;
+    }
+
+    .percent {
+      font-size: 60px;
+      color: #ff6a00;
+      vertical-align: super;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: red;
+      animation: fall 3s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
       }
-    </script>
-  </body>
-</html>
+      100% {
+        transform: translateY(100vh) rotate(720deg);
