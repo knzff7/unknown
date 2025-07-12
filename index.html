@@ -64,16 +64,15 @@
 </head>
 <body>
   <div class="title">Ваша скидка!</div>
-  <div class="number" id="output"><span>0</span><span class="percent">%</span></div>
+  <div class="number" id="output">—</div>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Функции работы с куками
+      // Куки
       function setCookie(name, value, hours) {
         const date = new Date();
         date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
-        const expires = "expires=" + date.toUTCString();
-        document.cookie = `${name}=${value}; ${expires}; path=/; SameSite=Lax`;
+        document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/; SameSite=Lax`;
       }
 
       function getCookie(name) {
@@ -81,25 +80,25 @@
         return match ? match[2] : null;
       }
 
-      // Получаем или создаем число
-      let number = getCookie("myNumber");
-      if (!number) {
-        number = Math.floor(Math.random() * 6) + 5;
-        setCookie("myNumber", number, 4); // сохраняем на 4 часа
+      // Получаем или создаём число
+      let saved = getCookie("myNumber");
+      if (!saved) {
+        saved = Math.floor(Math.random() * 6) + 5;
+        setCookie("myNumber", saved, 4);
       }
 
-      const output = document.getElementById('output');
+      const output = document.getElementById("output");
 
       // Анимация перебора
-      let animationTime = 1500;
-      let interval = 70;
       let start = Date.now();
+      const duration = 1500;
+      const interval = 60;
 
-      const animate = setInterval(() => {
-        let now = Date.now();
-        if (now - start >= animationTime) {
-          clearInterval(animate);
-          output.innerHTML = `<span>${number}</span><span class="percent">%</span>`;
+      const spin = setInterval(() => {
+        const elapsed = Date.now() - start;
+        if (elapsed >= duration) {
+          clearInterval(spin);
+          output.innerHTML = `<span>${saved}</span><span class="percent">%</span>`;
         } else {
           const rand = Math.floor(Math.random() * 6) + 5;
           output.innerHTML = `<span>${rand}</span><span class="percent">%</span>`;
@@ -110,4 +109,15 @@
       const colors = ["#ff6a00", "#ffd700", "#ff1493", "#00bfff", "#7cfc00"];
       for (let i = 0; i < 60; i++) {
         const confetti = document.createElement("div");
-        confetti.classList.ad
+        confetti.classList.add("confetti");
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.bottom = "0px";
+        confetti.style.animationDuration = (1.5 + Math.random() * 1.5) + "s";
+        confetti.style.animationDelay = (Math.random() * 1.5) + "s";
+        document.body.appendChild(confetti);
+      }
+    });
+  </script>
+</body>
+</html>
