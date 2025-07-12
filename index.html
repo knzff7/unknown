@@ -21,12 +21,13 @@
       color: #ff6a00;
       position: relative;
       z-index: 1;
+      display: flex;
+      align-items: center;
     }
 
     .percent {
-      font-size: 60px;
-      color: #ff6a00;
-      vertical-align: super;
+      font-size: 1em; /* теперь % будет того же размера, что и цифра */
+      margin-left: 10px;
     }
 
     .confetti {
@@ -52,7 +53,7 @@
   </style>
 </head>
 <body>
-  <div class="number" id="output">0<span class="percent">%</span></div>
+  <div class="number" id="output"></div>
 
   <script>
     // Получаем число из куки или создаем новое
@@ -66,8 +67,9 @@
       document.cookie = "myNumber=" + number + "; max-age=31536000"; // 1 год
     }
 
-    // Вывод числа + %
-    document.getElementById('output').innerHTML = number + '<span class="percent">%</span>';
+    // Создаем структуру с числом и символом %
+    const output = document.getElementById('output');
+    output.innerHTML = `<span>${number}</span><span class="percent">%</span>`;
 
     // Генерация конфетти
     function getRandomColor() {
@@ -77,4 +79,18 @@
 
     function createConfetti() {
       for (let i = 0; i < 80; i++) {
-        const confetti = document.create
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.backgroundColor = getRandomColor();
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.top = "-10px";
+        confetti.style.animationDuration = (2 + Math.random() * 3) + "s";
+        confetti.style.animationDelay = (Math.random() * 2) + "s";
+        document.body.appendChild(confetti);
+      }
+    }
+
+    createConfetti();
+  </script>
+</body>
+</html>
