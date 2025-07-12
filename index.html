@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Ваша скидка</title>
+  <title>Ваша скидка!</title>
   <style>
     body {
       margin: 0;
@@ -26,7 +26,7 @@
     }
 
     .number {
-      font-size: 120px;
+      font-size: 140px;
       font-weight: bold;
       color: #ff6a00;
       display: flex;
@@ -42,11 +42,12 @@
 
     .confetti {
       position: absolute;
-      width: 10px;
-      height: 10px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
       background: red;
       animation: shootUp linear forwards;
-      opacity: 0.8;
+      opacity: 0.9;
       z-index: 1;
     }
 
@@ -56,68 +57,4 @@
         opacity: 1;
       }
       100% {
-        transform: translateY(-120vh) scale(1.2) rotate(720deg);
-        opacity: 0;
-      }
-    }
-  </style>
-</head>
-<body>
-  <div class="title">Ваша скидка!</div>
-  <div class="number" id="output">—</div>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Куки
-      function setCookie(name, value, hours) {
-        const date = new Date();
-        date.setTime(date.getTime() + (hours * 60 * 60 * 1000));
-        document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/; SameSite=Lax`;
-      }
-
-      function getCookie(name) {
-        const match = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
-        return match ? match[2] : null;
-      }
-
-      // Получаем или создаём число
-      let saved = getCookie("myNumber");
-      if (!saved) {
-        saved = Math.floor(Math.random() * 6) + 5;
-        setCookie("myNumber", saved, 4);
-      }
-
-      const output = document.getElementById("output");
-
-      // Анимация перебора
-      let start = Date.now();
-      const duration = 1500;
-      const interval = 60;
-
-      const spin = setInterval(() => {
-        const elapsed = Date.now() - start;
-        if (elapsed >= duration) {
-          clearInterval(spin);
-          output.innerHTML = `<span>${saved}</span><span class="percent">%</span>`;
-        } else {
-          const rand = Math.floor(Math.random() * 6) + 5;
-          output.innerHTML = `<span>${rand}</span><span class="percent">%</span>`;
-        }
-      }, interval);
-
-      // Конфетти
-      const colors = ["#ff6a00", "#ffd700", "#ff1493", "#00bfff", "#7cfc00"];
-      for (let i = 0; i < 60; i++) {
-        const confetti = document.createElement("div");
-        confetti.classList.add("confetti");
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.bottom = "0px";
-        confetti.style.animationDuration = (1.5 + Math.random() * 1.5) + "s";
-        confetti.style.animationDelay = (Math.random() * 1.5) + "s";
-        document.body.appendChild(confetti);
-      }
-    });
-  </script>
-</body>
-</html>
+        tra
