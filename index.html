@@ -36,3 +36,76 @@
     }
 
     .percent {
+      font-size: 0.5em;
+      margin-left: 10px;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: red;
+      animation: shootUp 2s ease-out forwards;
+      opacity: 0.9;
+      z-index: 1;
+    }
+
+    @keyframes shootUp {
+      0% {
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-130vh) scale(1.4) rotate(1080deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="title">Ваша скидка!</div>
+  <div class="number" id="output">5<span class="percent">%</span></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const output = document.getElementById("output");
+
+      // Генерируем финальное число от 5 до 10
+      const finalNumber = Math.floor(Math.random() * 6) + 5;
+
+      // Анимация перебора цифр
+      const duration = 1500;
+      const interval = 60;
+      const start = Date.now();
+
+      const spin = setInterval(() => {
+        const elapsed = Date.now() - start;
+        if (elapsed >= duration) {
+          clearInterval(spin);
+          output.innerHTML = `<span>${finalNumber}</span><span class="percent">%</span>`;
+          triggerConfetti();
+        } else {
+          const rand = Math.floor(Math.random() * 6) + 5;
+          output.innerHTML = `<span>${rand}</span><span class="percent">%</span>`;
+        }
+      }, interval);
+
+      // Конфетти после остановки
+      function triggerConfetti() {
+        const colors = ["#ff6a00", "#ffd700", "#ff1493", "#00bfff", "#7cfc00"];
+        for (let i = 0; i < 80; i++) {
+          const confetti = document.createElement("div");
+          confetti.classList.add("confetti");
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.left = Math.random() * 100 + "vw";
+          confetti.style.bottom = "0px";
+          confetti.style.animationDuration = (1.5 + Math.random() * 1.5) + "s";
+          confetti.style.animationDelay = (Math.random() * 1) + "s";
+          document.body.appendChild(confetti);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
